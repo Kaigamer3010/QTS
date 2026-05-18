@@ -1,21 +1,29 @@
-- name: Enviar arquivos via FTP
-  uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-  with:
-    server: ${{ secrets.FTP_SERVER }}
-    username: ${{ secrets.FTP_USERNAME }}
-    password: ${{ secrets.FTP_PASSWORD }}
-    local-dir: ./
-    server-dir: ${{ secrets.FTP_DIR }}/
-    exclude: |
-      **/.git*
-      **/.github*
-      **/node_modules/**
-      **/*.md
-      **/*.yml
-      **/*.yaml
-      **/.env
-      **/.env.*
-      **/README*
-      **/docs/**
-      **/prints/**
-      **/*.pdf
+name: Testar e Deploy InfinityFree
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: ${{ secrets.FTP_DIR }}/
