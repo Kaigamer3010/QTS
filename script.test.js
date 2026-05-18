@@ -6,4 +6,5 @@ test('soma dois números', () => {
 
 test('mensagem de boas vindas', () => {
   expect(mensagemBoasVindas('Diogo')).toBe('Olá, Diogo!');
+  
 });
