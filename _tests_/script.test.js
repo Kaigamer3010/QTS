@@ -1,4 +1,4 @@
-const { somar, mensagemBoasVindas, valorMaior, parImpar, votar, positivo, bonus, dirigir, semestre, vogal, media, cadastro } = require('./script');
+const { somar, mensagemBoasVindas, valorMaior, parImpar, votar, positivo, bonus, dirigir, semestre, vogal, media, cadastro } = require('../script');
 
 test('soma dois números', () => {
   expect(somar(2, 3)).toBe(5);
